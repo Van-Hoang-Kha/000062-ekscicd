@@ -2,29 +2,12 @@
   "Version": "2012-10-17",
   "Statement": [
     {
-      "Sid": "IamPassRolePolicy",
+      "Sid": "CloudWatchLogsAccessPolicy",
       "Effect": "Allow",
       "Action": [
-          "iam:PassRole"
-      ],
-      "Resource": "*",
-      "Condition": {
-        "StringEqualsIfExists": {
-          "iam:PassedToService": [
-            "cloudformation.amazonaws.com",
-            "elasticbeanstalk.amazonaws.com",
-            "ec2.amazonaws.com",
-            "ecs-tasks.amazonaws.com"
-          ]
-        }
-      }
-    },
-    {
-      "Sid": "CodeBuildPolicy",
-      "Effect": "Allow",
-      "Action": [
-        "codebuild:BatchGetBuilds",
-        "codebuild:StartBuild"
+        "logs:CreateLogGroup",
+        "logs:CreateLogStream",
+        "logs:PutLogEvents"
       ],
       "Resource": "*"
     },
@@ -32,13 +15,11 @@
       "Sid": "CodeCommitPolicy",
       "Effect": "Allow",
       "Action": [
-        "codecommit:GetBranch",
-        "codecommit:GetCommit",
-        "codecommit:UploadArchive",
-        "codecommit:GetUploadArchiveStatus",
-        "codecommit:CancelUploadArchive"
+        "codecommit:GitPull"
       ],
-      "Resource": "*"
+      "Resource": [
+        "*"
+      ]
     },
     {
       "Sid": "S3AccessPolicy",
@@ -56,7 +37,14 @@
       "Sid": "ECRAccessPolicy",
       "Effect": "Allow",
       "Action": [
-        "ecr:DescribeImages"
+        "ecr:GetAuthorizationToken",
+        "ecr:GetDownloadUrlForLayer",
+        "ecr:BatchGetImage",
+        "ecr:BatchCheckLayerAvailability",
+        "ecr:PutImage",
+        "ecr:InitiateLayerUpload",
+        "ecr:UploadLayerPart",
+        "ecr:CompleteLayerUpload"
       ],
       "Resource": "*"
     },
@@ -64,7 +52,7 @@
       "Sid": "EKSAccessPolicy",
       "Effect": "Allow",
       "Action": [
-        "eks:Describe*"
+        "eks:*"
       ],
       "Resource": "*"
     }
